@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- 
+    This is a Javascript image slideshow
+    
+
+    Backlog
+    ~~~~~~~
+    To make this completely self-contained:
+        * copy w3.css from w3schools, so we do't need internet access 
+          when running.
+          See http://www.w3schools.com/w3css/w3css_slideshow.asp
+        * Generate this HTML page using a little bit of Python;
+          - supply a folder name, where the folder contains image files.
+          - specify a config file with:
+              - slide width and height
+              - duration to show each slide
+              - animation type (one of the below, or "random")
+        * make the images centred vertically
+        * ensure full screen images are positioned correctly.
+            (N.B. a 7" screen will be 800x480px)
+        * Python to scale images to optimise for the output size.
+        * Python to crop/pad images to the right aspect ratio
+
+
+    Documentation
+    ~~~~~~~~~~~~~
+    Animations:
+        To slide the image in from left/right/top/bottom, use one of these:
+            w3-animate-left
+            w3-animate-right
+            w3-animate-top
+            w3-animate-bottom
+        To fade the image in from black (the background colour), use
+            w3-animate-opacity
+        To zoom in from the centre, use
+            w3-animate-zoom
+-->
+
+
+<html>
+    <head>
+        <script>
+            var animate_using_carousel = true;
+            var show_each_slide_for = 5; // in seconds, if animating
+        </script>
+
+        <!-- You need w3.css responsive CSS library -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+
+        <style>
+            body {
+                background-color: #333;
+            }
+            .mySlides {
+                /* 800x480 is 1.666/1 or 5/3   */
+                width: 800px;
+                height: 480px;
+                border: 1px solid #eea236;
+            }
+
+            .awaFloatingBtn {
+                position:absolute;
+                top:47%;
+                z-index:0;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <div class="w3-content w3-display-container m12">
+
+            <img class="mySlides w3-animate-opacity" src="img001.png">
+            <img class="mySlides w3-animate-opacity" src="img002.jpg">
+            <img class="mySlides w3-animate-opacity" src="img003.png">
+
+            
+            <!-- File: Close-up_Acoustic_Guitar.jpg: 
+                Author: "Pisethinfo"
+                URL: https://commons.wikimedia.org/wiki/File:Close-up_Acoustic_Guitar.jpg
+            -->
+            <img class="mySlides w3-animate-opacity" src="Close-up_Acoustic_Guitar.jpg">
+
+            <div class="mySlides w3-animate-opacity" style="background-color: #844">
+                  <div class="w3-container w3-red">
+                      <h1><b>Did You Know?</b></h1>
+                      <h1><i>You can have a block of HTML instead of an image.</i></h1>
+                      Much more at
+                      <a href="http://www.w3schools.com/w3css/w3css_slideshow.asp"
+                          >www.w3schools.com/w3css/w3css_slideshow.asp</a>
+                  </div>
+            </div>
+            <a class="w3-btn-floating awaFloatingBtn" style="left: 0" onclick="plusDivs(-1)">&#10094;</a>
+            <a class="w3-btn-floating awaFloatingBtn" style="right: 0" onclick="plusDivs(+1)">&#10095;</a>
+
+        </div>
+        <script>
+            // option 1: use clicky buttons to move left and right.
+            var slideIndex;
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = x.length} ;
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                x[slideIndex-1].style.display = "block";
+            }
+
+            // --------------------------------------------
+
+            slideIndex = 0;
+            function hideButtons() {
+                b = document.getElementsByClassName("awaFloatingBtn");
+                for (i = 0; i < b.length; i++) {
+                    b[i].style.display = "none";
+                }
+            }
+            function run_carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                  x[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > x.length) {
+                    slideIndex = 1
+                }
+                x[slideIndex-1].style.display = "block";
+                setTimeout(run_carousel, show_each_slide_for * 1000);
+            }
+
+            if (animate_using_carousel) {
+                hideButtons();
+                run_carousel();
+            }else{
+                slideIndex = 1;
+                showDivs(slideIndex);
+            }
+
+        </script>
+        </body>
+</html>
