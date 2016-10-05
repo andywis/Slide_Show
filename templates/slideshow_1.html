@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var show_each_slide_for = {{ delay }}; // in seconds
+        </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html, body {
+                font-family: Verdana,sans-serif;
+                font-size: 15px;
+                line-height: 1.5;
+            }
+            body {
+                margin: 0;
+                display: block;
+                background-color: #333;
+            }
+            *, *:before, *:after {
+                box-sizing: inherit;
+            }
+            .mySlides {
+                max-width: {{ width }}px;
+                height: {{ height }}px;
+                border: 0;
+                margin: auto; /* max-width and margin allow portrait photos to display OK */
+            }
+            .content {
+                /* not essential, but horiz-centres the image if browser is too wide */
+                max-width: {{ width }}px;
+                margin: auto;
+                position: relative;
+                
+            }
+            #screensize {
+                position:absolute;
+                top: 0px;
+                left:0px;
+                background-color: #aaa;
+                color: #222;
+                font-size: 12pt;
+                font-weight:bold;
+                padding: 5px 20px 5px 20px;
+                opacity:0.75;
+            }
+           
+            .animate-opacity{-webkit-animation:opac 1.5s;animation:opac 1.5s}
+            @-webkit-keyframes opac{from{opacity:0} to{opacity:1}}
+            @keyframes opac{from{opacity:0} to{opacity:1}}
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            {% for path in image_filenames %}
+                <img class="mySlides animate-opacity" src="{{ path }}">
+            {% endfor %}
+        </div>
+        <div id="screensize"></div>
+        <script>
+            var slideIndex = 0;
+            function run_carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                  x[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > x.length) {
+                    slideIndex = 1
+                }
+                x[slideIndex-1].style.display = "block";
+                setTimeout(run_carousel, show_each_slide_for * 1000);
+            }
+            function get_window_size() {
+                var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                x = w.innerWidth || e.clientWidth || g.clientWidth,
+                y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+                return {"x": x, "y":y};
+            }
+            function show_screen_size() {
+                elt = document.getElementById("screensize");
+                winsz = get_window_size();
+                elt.innerHTML = "" + winsz.x + " x " + winsz.y;
+                elt.style.left = "" + ((winsz.x - elt.offsetWidth)/2) + "px"
+                setTimeout(hide_screen_size, show_each_slide_for * 1000);
+            }
+            function hide_screen_size() {
+                elt = document.getElementById("screensize");
+                elt.style.display = "none"
+            }
+            run_carousel();
+            show_screen_size();
+        </script>
+        </body>
+        <!-- width = {{ width }}, height = {{ height }} -->
+</html>

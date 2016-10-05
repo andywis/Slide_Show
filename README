@@ -4,3 +4,60 @@ I saw a tutorial online that was so convoluted, I thought "I can do
 better than that. It only needs a web page and a little Javascript"
 
 So here's my slide show app.
+
+The CSS is based on http://www.w3schools.com/w3css/w3css_slideshow.asp, 
+stripped down to only include what I need.
+
+       
+
+Installation
+~~~~~~~~~~~~~
+    Pre-requisites:
+        * Linux/Mac (because the setup script is a shell script); if you want
+          to get this working on Windows, please see what setup.sh does
+          and feel free to let me know
+        * Python
+        * Virtualenv
+
+    setup:
+        run the shellscript "setup.sh" (it doesn't need root access)
+
+Documentation
+~~~~~~~~~~~~~
+  Copy the "default_settings.py" and save the copy as "settings.py".
+  Edit "settings.py" according to your needs.
+
+  run the program "make_slideshow.py" to create some HTML.
+
+  (Optional) Copy the HTML and the images to the system you're using as
+  your digial photo frame
+
+  By default, and images in the folder called "images" will be added
+  to the slideshow. They will be displayed in alphanumeric order.
+
+  When the page first loads, it will tell you the size of the browser
+  window. To see the full-screen window size, press F11 to maximise the
+  browser, then F5 to reload the page.
+
+  Crop your photos to match the height of the screen on the target system.
+  (particularly if you're using a Raspberry Pi where processing power to 
+  handle large images may be limited)
+
+
+Further suggestions:
+~~~~~~~~~~~~~~~~~~~~
+  o  Config to specify animation type: slide in from L/R/T/B, zoom, spin etc.
+
+  o  Fade out image at end of display interval (currently it's instant-off)
+
+  o  ability to add captions to any photo
+
+  o  ability to add a block of HTML instead of a full-screen image.
+
+  o  custom transitions, custom delays for individual photos
+
+  o  Things to make it super-easy to run on a Raspberry Pi
+
+  o  Utility to scale images to optimise for the output size. (Imagemagick script?)
+
+  o  Utility to crop/pad images to the right aspect ratio. (Imagemagick script?)
