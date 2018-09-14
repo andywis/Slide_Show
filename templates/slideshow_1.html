@@ -48,6 +48,12 @@
             @-webkit-keyframes opac{from{opacity:0} to{opacity:1}}
             @keyframes opac{from{opacity:0} to{opacity:1}}
         </style>
+
+        {% if show_digital_clock %}
+            <link rel="stylesheet" href="images/flipclock.css">
+            <script> var showDigitalClock = true; //</script>
+            <style> div.digital-clock {position: absolute; top: {{ clock_pos_top }}; left: {{ clock_pos_left }}; } </style>
+        {% endif %}
     </head>
     <body>
         <div class="content">
@@ -94,6 +100,20 @@
             run_carousel();
             show_screen_size();
         </script>
+
+        {% if show_digital_clock %}
+            <div class="digital-clock"></div>
+            <script src="images/jquery-3.2.1.min.js"></script>
+            <script src="images/flipclock.min.js"></script>
+            <script>
+            if (showDigitalClock) {
+                var showClockSeconds = {{ show_clock_seconds }};
+                new FlipClock($('.digital-clock'),
+                              {clockFace: 'TwentyFourHourClock', showSeconds: showClockSeconds });
+            }
+            </script>
+        {% endif %}
+
         </body>
         <!-- width = {{ width }}, height = {{ height }} -->
 </html>
